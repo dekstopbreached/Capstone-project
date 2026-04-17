@@ -151,7 +151,7 @@ async function main() {
     await app.listen({ port, host });
     app.log.info(`API listening on http://${host}:${port}`);
     app.log.info(
-      `MongoDB: ${process.env.MONGODB_URI ?? 'mongodb://127.0.0.1:27017'} / db=${process.env.MONGODB_DB ?? 'northline'}`,
+      `MongoDB: ${process.env.MONGODB_URI ?? 'mongodb://127.0.0.1:27017'} / db=${process.env.MONGODB_DB ?? 'streetwear'}`,
     );
   } catch (err) {
     app.log.error(err);

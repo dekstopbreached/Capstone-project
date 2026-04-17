@@ -1,9 +1,13 @@
-import { useCallback, useId, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { buildCheckoutPayload, postCheckoutStart } from '../../lib/api';
 import type { ShippingFormValues } from '../../lib/schemas/checkout';
 import { useCart } from '../../context/CartContext';
 import { ShippingStepForm } from './ShippingStepForm';
 import { VerifyStepForm } from './VerifyStepForm';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { ArrowLeft, Check, Info } from 'lucide-react';
 
 type Props = {
   onOrderComplete: () => void;
@@ -12,7 +16,6 @@ type Props = {
 
 export function CheckoutPanel({ onOrderComplete, onServerSubtotal }: Props) {
   const { lines } = useCart();
-  const bannerId = useId();
   const [step, setStep] = useState<1 | 2>(1);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [devOtp, setDevOtp] = useState<string | null>(null);
@@ -53,55 +56,54 @@ export function CheckoutPanel({ onOrderComplete, onServerSubtotal }: Props) {
       <div className="mb-8 flex items-center gap-2">
         <StepDot index={1} label="Details" state={step === 1 ? 'current' : 'complete'} />
         <div
-          className={`h-px flex-1 rounded ${step > 1 ? 'bg-orange-500' : 'bg-stone-200'}`}
+          className={`h-0.5 flex-1 rounded-full ${step > 1 ? 'bg-primary' : 'bg-border'}`}
           aria-hidden
         />
-        <StepDot
-          index={2}
-          label="Verify"
-          state={step === 2 ? 'current' : 'upcoming'}
-        />
-      </div>
+          <StepDot
+            index={2}
+            label="Verify"
+            state={step === 2 ? 'current' : 'upcoming'}
+          />
+        </div>
 
       {step === 2 && shipping && bannerOpen && (
-        <div
-          role="status"
-          aria-labelledby={bannerId}
-          className={`mb-6 rounded-2xl border px-4 py-3 text-sm ${
+        <Alert
+          className={`mb-10 glass preserve-3d translate-z-20 ${
             devOtp
-              ? 'border-orange-200 bg-orange-50 text-orange-950'
-              : 'border-stone-200 bg-stone-50 text-stone-800'
+              ? 'border-primary/20 bg-primary/5 text-foreground'
+              : 'border-border bg-card/50 text-foreground'
           }`}
         >
-          <div className="flex justify-between gap-2">
-            <p id={bannerId}>
+          <Info className="h-4 w-4 text-primary" />
+          <AlertDescription className="flex justify-between items-start gap-4">
+            <div className="text-[10px] font-black uppercase tracking-widest leading-relaxed">
               {devOtp ? (
                 <>
-                  <span className="font-semibold">Development:</span> your code
+                  <span className="text-primary">Dev Notice:</span> your code
                   is{' '}
-                  <span className="font-mono font-bold tracking-wide">
+                  <Badge variant="outline" className="font-mono font-black border-primary/50 text-primary bg-primary/10">
                     {devOtp}
-                  </span>
-                  . In production the API would not return this; use SMS or
-                  email.
+                  </Badge>
+                  .
                 </>
               ) : (
                 <>
-                  Enter the 6-digit code sent to{' '}
-                  <span className="font-medium">{shipping.email}</span>.
+                  Code sent to{' '}
+                  <span className="text-primary">{shipping.email}</span>.
                 </>
               )}
-            </p>
-            <button
-              type="button"
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => setBannerOpen(false)}
-              className={`shrink-0 ${devOtp ? 'text-orange-800/70 hover:text-orange-900' : 'text-stone-500 hover:text-stone-800'}`}
+              className="h-6 w-6 shrink-0 text-muted-foreground hover:text-foreground"
               aria-label="Dismiss"
             >
               ×
-            </button>
-          </div>
-        </div>
+            </Button>
+          </AlertDescription>
+        </Alert>
       )}
 
       {step === 1 && (
@@ -122,17 +124,18 @@ export function CheckoutPanel({ onOrderComplete, onServerSubtotal }: Props) {
       )}
 
       {step === 2 && (
-        <button
-          type="button"
+        <Button
+          variant="link"
           onClick={() => {
             setStep(1);
             setSessionId(null);
             setDevOtp(null);
           }}
-          className="mt-6 text-sm font-medium text-stone-500 underline-offset-2 hover:text-stone-800 hover:underline"
+          className="mt-10 text-muted-foreground hover:text-foreground h-auto p-0 gap-2 text-[10px] font-black uppercase tracking-widest"
         >
-          ← Edit shipping details
-        </button>
+          <ArrowLeft className="h-3 w-3" />
+          Change details
+        </Button>
       )}
     </div>
   );
@@ -149,19 +152,21 @@ function StepDot({
 }) {
   const circle =
     state === 'complete'
-      ? 'bg-orange-600 text-white'
+      ? 'bg-primary text-background shadow-[0_0_20px_theme("colors.primary.DEFAULT/0.3")]'
       : state === 'current'
-        ? 'bg-stone-900 text-white'
-        : 'bg-stone-200 text-stone-500';
+        ? 'bg-foreground text-background shadow-xl scale-110'
+        : 'bg-muted text-muted-foreground opacity-50';
 
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div className="flex flex-col items-center gap-2.5 preserve-3d group">
       <span
-        className={`flex size-9 items-center justify-center rounded-full text-sm font-semibold ${circle}`}
+        className={`flex size-11 items-center justify-center rounded-full text-xs font-black transition-all duration-500 translate-z-10 group-hover:translate-z-20 ${circle}`}
       >
-        {state === 'complete' ? '✓' : index}
+        {state === 'complete' ? <Check className="h-5 w-5 stroke-[3]" /> : index}
       </span>
-      <span className="text-xs font-medium text-stone-500">{label}</span>
+      <span className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${
+        state === 'current' ? 'text-foreground' : state === 'complete' ? 'text-primary' : 'text-muted-foreground'
+      }`}>{label}</span>
     </div>
   );
 }

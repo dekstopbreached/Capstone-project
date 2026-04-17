@@ -1,5 +1,7 @@
 import { formatPrice } from '../data/products';
 import { useCart } from '../context/CartContext';
+import { Button } from '@/components/ui/button';
+import { ShoppingCart, ArrowLeft } from 'lucide-react';
 
 type Props = {
   onOpenCheckout: () => void;
@@ -11,59 +13,58 @@ export function Header({ onOpenCheckout, phase, onBackToShop }: Props) {
   const { itemCount, subtotalCents } = useCart();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-stone-300 bg-stone-50/95 shadow-sm backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/80 shadow-2xl backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-4">
           {phase !== 'shop' && onBackToShop && (
-            <button
-              type="button"
+            <Button
+              variant="outline"
+              size="sm"
               onClick={onBackToShop}
-              className="shrink-0 rounded-md border border-stone-300 bg-white px-3 py-2 text-sm font-semibold text-stone-800 shadow-sm transition hover:bg-stone-100"
+              className="shrink-0 gap-2 border-border/50 hover:bg-accent"
             >
-              ← Shop
-            </button>
+              <ArrowLeft className="h-4 w-4" />
+              Shop
+            </Button>
           )}
           <div className="min-w-0">
-            <p className="truncate font-serif text-2xl font-bold tracking-tight text-stone-900 sm:text-3xl">
-              Northline Electronics
+            <p className="truncate font-sans text-xl font-black uppercase tracking-[0.2em] text-foreground sm:text-2xl">
+              Streetwear <span className="text-muted-foreground/50">Collective</span>
             </p>
-            <p className="mt-0.5 text-xs font-semibold uppercase tracking-[0.15em] text-amber-900/80">
-              TVs · Audio · Accessories
+            <p className="mt-0.5 text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground/60">
+              Premium · Essentials · Future
             </p>
           </div>
         </div>
 
-        <nav className="hidden items-center gap-8 text-sm font-semibold text-stone-700 md:flex">
-          <a href="#categories" className="transition hover:text-amber-900">
+        <nav className="hidden items-center gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground md:flex">
+          <a href="#categories" className="transition hover:text-foreground">
             Catalog
           </a>
-          <a href="#trust" className="transition hover:text-amber-900">
+          <a href="#trust" className="transition hover:text-foreground">
             Why us
           </a>
         </nav>
 
         <div className="flex items-center gap-4">
           {phase === 'shop' && (
-            <div className="hidden text-right sm:block">
-              <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">
-                Cart
+            <div className="hidden text-right sm:block divide-y divide-border/20">
+              <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground pb-0.5">
+                Cart Total
               </p>
-              <p className="text-base font-bold tabular-nums text-stone-900">
+              <p className="text-sm font-black tabular-nums text-foreground pt-0.5">
                 {formatPrice(subtotalCents)}
               </p>
             </div>
           )}
-          <button
-            type="button"
+          <Button
             onClick={onOpenCheckout}
             disabled={itemCount === 0 || phase === 'checkout'}
-            className="inline-flex items-center gap-2 rounded-md bg-stone-900 px-5 py-3 text-sm font-bold text-white shadow-md transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:bg-stone-400 disabled:shadow-none"
+            className="gap-3 px-8 h-11 bg-foreground text-background hover:bg-foreground/90 transition-all active:scale-95 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
           >
-            <span className="tabular-nums">{itemCount}</span>
-            <span className="hidden sm:inline">
-              {phase === 'checkout' ? 'Checking out' : 'Checkout'}
-            </span>
-          </button>
+            <ShoppingCart className="h-4 w-4" />
+            <span className="tabular-nums font-black text-xs">{itemCount}</span>
+          </Button>
         </div>
       </div>
     </header>

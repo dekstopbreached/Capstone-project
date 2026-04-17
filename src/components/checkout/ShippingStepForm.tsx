@@ -4,6 +4,10 @@ import {
   shippingSchema,
   type ShippingFormValues,
 } from '../../lib/schemas/checkout';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Label } from '@/components/ui/label';
 
 const countries = [
   'United States',
@@ -52,63 +56,64 @@ export function ShippingStepForm({
       noValidate
     >
       {serverError && (
-        <p
-          role="alert"
-          className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800"
-        >
-          {serverError}
-        </p>
+        <Alert variant="destructive">
+          <AlertDescription>{serverError}</AlertDescription>
+        </Alert>
       )}
       <div className="grid gap-4 sm:grid-cols-2">
-        <div className="sm:col-span-2">
-          <label className="block text-xs font-medium text-stone-500 uppercase">
+        <div className="sm:col-span-2 space-y-2">
+          <Label className="uppercase text-[10px] font-black tracking-widest text-stone-500">
             Full name
-          </label>
-          <input
+          </Label>
+          <Input
             {...register('fullName')}
             autoComplete="name"
-            className="mt-1 w-full rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-stone-900 outline-none ring-orange-500/0 transition focus:border-orange-400 focus:ring-4"
+            placeholder="John Doe"
+            className="h-11"
           />
           {errors.fullName && (
             <p className="mt-1 text-sm text-red-600">{errors.fullName.message}</p>
           )}
         </div>
-        <div>
-          <label className="block text-xs font-medium text-stone-500 uppercase">
+        <div className="space-y-2">
+          <Label className="uppercase text-[10px] font-black tracking-widest text-stone-500">
             Email
-          </label>
-          <input
+          </Label>
+          <Input
             {...register('email')}
             type="email"
             autoComplete="email"
-            className="mt-1 w-full rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-stone-900 outline-none ring-orange-500/0 transition focus:border-orange-400 focus:ring-4"
+            placeholder="john@example.com"
+            className="h-11"
           />
           {errors.email && (
             <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
           )}
         </div>
-        <div>
-          <label className="block text-xs font-medium text-stone-500 uppercase">
+        <div className="space-y-2">
+          <Label className="uppercase text-[10px] font-black tracking-widest text-stone-500">
             Phone
-          </label>
-          <input
+          </Label>
+          <Input
             {...register('phone')}
             type="tel"
             autoComplete="tel"
-            className="mt-1 w-full rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-stone-900 outline-none ring-orange-500/0 transition focus:border-orange-400 focus:ring-4"
+            placeholder="+1 (555) 000-0000"
+            className="h-11"
           />
           {errors.phone && (
             <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
           )}
         </div>
-        <div className="sm:col-span-2">
-          <label className="block text-xs font-medium text-stone-500 uppercase">
+        <div className="sm:col-span-2 space-y-2">
+          <Label className="uppercase text-[10px] font-black tracking-widest text-stone-500">
             Address
-          </label>
-          <input
+          </Label>
+          <Input
             {...register('addressLine')}
             autoComplete="street-address"
-            className="mt-1 w-full rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-stone-900 outline-none ring-orange-500/0 transition focus:border-orange-400 focus:ring-4"
+            placeholder="123 Main St, Apt 4"
+            className="h-11"
           />
           {errors.addressLine && (
             <p className="mt-1 text-sm text-red-600">
@@ -116,27 +121,29 @@ export function ShippingStepForm({
             </p>
           )}
         </div>
-        <div>
-          <label className="block text-xs font-medium text-stone-500 uppercase">
+        <div className="space-y-2">
+          <Label className="uppercase text-[10px] font-black tracking-widest text-stone-500">
             City
-          </label>
-          <input
+          </Label>
+          <Input
             {...register('city')}
             autoComplete="address-level2"
-            className="mt-1 w-full rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-stone-900 outline-none ring-orange-500/0 transition focus:border-orange-400 focus:ring-4"
+            placeholder="New York"
+            className="h-11"
           />
           {errors.city && (
             <p className="mt-1 text-sm text-red-600">{errors.city.message}</p>
           )}
         </div>
-        <div>
-          <label className="block text-xs font-medium text-stone-500 uppercase">
+        <div className="space-y-2">
+          <Label className="uppercase text-[10px] font-black tracking-widest text-stone-500">
             Postal code
-          </label>
-          <input
+          </Label>
+          <Input
             {...register('postalCode')}
             autoComplete="postal-code"
-            className="mt-1 w-full rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-stone-900 outline-none ring-orange-500/0 transition focus:border-orange-400 focus:ring-4"
+            placeholder="10001"
+            className="h-11"
           />
           {errors.postalCode && (
             <p className="mt-1 text-sm text-red-600">
@@ -144,13 +151,13 @@ export function ShippingStepForm({
             </p>
           )}
         </div>
-        <div className="sm:col-span-2">
-          <label className="block text-xs font-medium text-stone-500 uppercase">
+        <div className="sm:col-span-2 space-y-2">
+          <Label className="uppercase text-[10px] font-black tracking-widest text-stone-500">
             Country
-          </label>
+          </Label>
           <select
             {...register('country')}
-            className="mt-1 w-full rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-stone-900 outline-none ring-orange-500/0 transition focus:border-orange-400 focus:ring-4"
+            className="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {countries.map((c) => (
               <option key={c} value={c}>
@@ -164,13 +171,13 @@ export function ShippingStepForm({
         </div>
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-full bg-orange-600 py-3 text-sm font-semibold text-white transition hover:bg-orange-500 disabled:opacity-60"
+        className="w-full h-12 text-base font-bold"
       >
-        Send verification code
-      </button>
+        {isSubmitting ? 'Processing...' : 'Send verification code'}
+      </Button>
     </form>
   );
 }

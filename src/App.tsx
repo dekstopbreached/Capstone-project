@@ -6,14 +6,14 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { PromoStrip } from './components/PromoStrip';
 import { ShopCatalog } from './components/ShopCatalog';
-import { CartSummary } from './components/CartSummary';
 import { CheckoutPanel } from './components/checkout/CheckoutPanel';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { CheckCircle, RefreshCw, ChevronDown } from 'lucide-react';
 
 type Phase = 'shop' | 'checkout' | 'success';
-
-function scrollToCatalog() {
-  document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' });
-}
 
 function Shell() {
   const [phase, setPhase] = useState<Phase>('shop');
@@ -69,7 +69,8 @@ function Shell() {
   const displaySubtotal = serverSubtotalCents ?? subtotalCents;
 
   return (
-    <div className="min-h-dvh">
+    <div className="dark min-h-dvh bg-background text-foreground perspective overflow-x-hidden relative">
+      <div className="fixed inset-0 pointer-events-none bg-grain z-50" aria-hidden="true" />
       <PromoStrip />
       <Header
         phase={phase}
@@ -77,191 +78,232 @@ function Shell() {
         onBackToShop={phase !== 'shop' ? goShop : undefined}
       />
 
-      {phase === 'shop' && <Hero onBrowse={scrollToCatalog} />}
+      {phase === 'shop' && <Hero />}
 
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
-        {phase === 'shop' && (
-          <div className="grid gap-12 lg:grid-cols-[1fr_340px] lg:items-start lg:gap-14">
-            <div>
-              <div className="mb-10 max-w-3xl">
-                <h2 className="font-serif text-3xl font-bold uppercase tracking-wide text-stone-900 sm:text-4xl">
-                  Shop
-                </h2>
-                <p className="mt-3 text-stone-600">
-                  Live catalog from MongoDB — TVs, wireless and wired headphones,
-                  speakers, monitors, wearables, and accessories. Add items to
-                  your cart; totals are confirmed again at checkout.
-                </p>
+      {phase === 'shop' && (
+        <div className="w-full">
+          {/* Filter and Sort Bar */}
+          <div className="border-b border-border bg-background/80 backdrop-blur-md sticky top-[64px] z-20">
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+              <div className="flex items-center gap-2 cursor-pointer hover:text-stone-600 transition-colors">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="4" y1="21" x2="4" y2="14" />
+                  <line x1="4" y1="10" x2="4" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12" y2="3" />
+                  <line x1="20" y1="21" x2="20" y2="16" />
+                  <line x1="20" y1="12" x2="20" y2="3" />
+                  <line x1="1" y1="14" x2="7" y2="14" />
+                  <line x1="9" y1="8" x2="15" y2="8" />
+                  <line x1="17" y1="16" x2="23" y2="16" />
+                </svg>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground">
+                  Filter and Sort
+                </span>
               </div>
-              {productsLoading && (
-                <p className="text-stone-600">Loading catalog…</p>
-              )}
-              {productsError && (
-                <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-900">
-                  <p>{productsError}</p>
-                  <button
-                    type="button"
-                    className="mt-2 font-bold underline"
-                    onClick={() => {
-                      setProductsLoading(true);
-                      setProductsError(null);
-                      fetchProducts()
-                        .then(setProducts)
-                        .catch((e) =>
-                          setProductsError(
-                            e instanceof Error ? e.message : 'Failed to load',
-                          ),
-                        )
-                        .finally(() => setProductsLoading(false));
-                    }}
-                  >
-                    Retry
-                  </button>
+
+              <div className="flex items-center gap-8">
+                <div className="flex items-center gap-2 cursor-pointer group">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground group-hover:text-foreground transition-colors">
+                    Featured
+                  </span>
+                  <ChevronDown className="h-3 w-3 text-muted-foreground group-hover:text-foreground transition-colors" />
                 </div>
-              )}
-              {!productsLoading && !productsError && (
-                <ShopCatalog products={products} />
-              )}
-
-              <section
-                id="trust"
-                className="mt-20 scroll-mt-28 rounded-lg border border-stone-200 bg-white p-8 shadow-sm"
-              >
-                <h3 className="font-serif text-xl font-bold text-stone-900">
-                  Built for demos &amp; portfolios
-                </h3>
-                <ul className="mt-4 space-y-2 text-stone-600">
-                  <li>
-                    <strong className="text-stone-800">React Hook Form + Zod</strong>{' '}
-                    on shipping and OTP format; server validates again.
-                  </li>
-                  <li>
-                    <strong className="text-stone-800">MongoDB</strong> stores
-                    products, orders, and verification codes.
-                  </li>
-                  <li>
-                    <strong className="text-stone-800">Server-side pricing</strong>{' '}
-                    from product IDs so cart totals stay honest.
-                  </li>
-                </ul>
-              </section>
-            </div>
-            <div className="lg:sticky lg:top-28">
-              <CartSummary onCheckout={goCheckout} />
-            </div>
-          </div>
-        )}
-
-        {phase === 'checkout' && (
-          <div className="grid gap-12 lg:grid-cols-[1fr_300px] lg:items-start">
-            <section>
-              <h1 className="font-serif text-3xl font-bold text-stone-900 sm:text-4xl">
-                Secure checkout
-              </h1>
-              <p className="mt-3 text-stone-600">
-                Step 1: shipping validated with Zod on the client and on the API.
-                Step 2: the server checks your 6-digit code (stored in MongoDB
-                with an expiry) before confirming the order and updating stock.
-              </p>
-              <div className="mt-10">
-                <CheckoutPanel
-                  onOrderComplete={handleOrderComplete}
-                  onServerSubtotal={setServerSubtotalCents}
-                />
+                <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                  <span className="text-foreground">1976</span> Products
+                </div>
               </div>
-            </section>
-            <aside className="rounded-lg border border-stone-200 bg-white p-6 shadow-sm">
-              <p className="text-xs font-bold uppercase tracking-wide text-stone-500">
-                Order total
-              </p>
-              <p className="mt-2 text-3xl font-bold tabular-nums text-stone-900">
-                {formatPrice(displaySubtotal)}
-              </p>
-              {serverSubtotalCents != null && (
-                <p className="mt-2 text-xs text-stone-500">
-                  Subtotal after server repricing at checkout start (authoritative
-                  for payment).
+            </div>
+          </div>
+
+          <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+            {productsLoading && (
+              <div className="flex h-64 flex-col items-center justify-center gap-4 text-stone-400">
+                <RefreshCw className="h-8 w-8 animate-spin" />
+                <p className="text-sm font-medium tracking-wide">Updating catalog...</p>
+              </div>
+            )}
+            
+            {!productsLoading && !productsError && (
+              <div className="space-y-32">
+                <ShopCatalog products={products} />
+                
+                {/* Visual Break / Newsletter or Featured Teaser */}
+                <div className="relative overflow-hidden rounded-[2px] bg-stone-900 shadow-2xl">
+                  {/* ... contents as before but maybe updated image ... */}
+                  <div className="absolute inset-0">
+                    <img 
+                      src="https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=2070&auto=format&fit=crop" 
+                      className="h-full w-full object-cover opacity-60 transition-transform duration-1000 hover:scale-110"
+                      alt="Trending collection"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
+                  </div>
+                  <div className="relative z-10 p-12 lg:p-20">
+                    <p className="text-xs font-black uppercase tracking-[0.4em] text-white/50">
+                      Season Drop
+                    </p>
+                    <h2 className="mt-4 max-w-sm text-4xl font-black uppercase tracking-tighter text-white sm:text-6xl">
+                      The Neon <br /> Street <br /> Collection
+                    </h2>
+                    <p className="mt-6 max-w-xs text-sm font-medium leading-relaxed text-stone-400">
+                      Limited edition. Futuristic urban essentials.
+                    </p>
+                    <button className="mt-10 border-b-2 border-white pb-1 text-sm font-black uppercase tracking-widest text-white transition-all hover:tracking-[0.3em]">
+                      Explore Drop
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </main>
+        </div>
+      )}
+
+      {(phase === 'checkout' || phase === 'success') && (
+        <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+          {phase === 'checkout' && (
+            <div className="grid gap-12 lg:grid-cols-[1fr_300px] lg:items-start">
+              <section>
+                <h1 className="font-serif text-3xl font-bold text-foreground sm:text-4xl">
+                  Secure checkout
+                </h1>
+                <p className="mt-3 text-stone-600">
+                  Step 1: shipping validated with Zod on the client and on the API.
+                  Step 2: the server checks your 6-digit code (stored in MongoDB
+                  with an expiry) before confirming the order and updating stock.
                 </p>
-              )}
-              <p className="mt-4 text-sm text-stone-500">
-                Tax and shipping are illustrative only in this demo.
-              </p>
-            </aside>
-          </div>
-        )}
+                <div className="mt-10">
+                  <CheckoutPanel
+                    onOrderComplete={handleOrderComplete}
+                    onServerSubtotal={setServerSubtotalCents}
+                  />
+                </div>
+              </section>
+              <Card className="shadow-lg">
+                <CardContent className="p-6 space-y-4">
+                  <Badge variant="outline" className="text-xs font-bold uppercase tracking-wider">
+                    Order total
+                  </Badge>
+                  <p className="text-4xl font-black tabular-nums text-foreground">
+                    {formatPrice(displaySubtotal)}
+                  </p>
+                  {serverSubtotalCents != null && (
+                    <p className="text-xs text-stone-500">
+                      Subtotal after server repricing at checkout start (authoritative
+                      for payment).
+                    </p>
+                  )}
+                  <Separator />
+                  <p className="text-sm text-stone-500">
+                    Tax and shipping are illustrative only in this demo.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          )}
 
-        {phase === 'success' && (
-          <div className="mx-auto max-w-lg rounded-lg border border-stone-200 bg-white px-8 py-14 text-center shadow-lg">
-            <p className="text-5xl" aria-hidden>
-              ✓
-            </p>
-            <h1 className="mt-6 font-serif text-3xl font-bold text-stone-900">
-              You&apos;re verified
-            </h1>
-            <p className="mt-4 text-stone-600">
-              Order confirmed on the server; inventory was updated. Your cart was
-              cleared.
-            </p>
-            <button
-              type="button"
-              onClick={() => setPhase('shop')}
-              className="mt-10 w-full rounded-md bg-stone-900 py-3.5 text-sm font-bold text-white transition hover:bg-stone-800"
-            >
-              Back to shop
-            </button>
-          </div>
-        )}
-      </main>
+          {phase === 'success' && (
+            <Card className="mx-auto max-w-lg overflow-hidden shadow-2xl">
+              <CardContent className="px-8 py-14 text-center">
+                <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100">
+                  <CheckCircle className="h-10 w-10 text-emerald-600" />
+                </div>
+                <h1 className="font-serif text-3xl font-bold text-foreground">
+                  You&apos;re verified
+                </h1>
+                <p className="mt-4 text-stone-600">
+                  Order confirmed on the server; inventory was updated. Your cart was
+                  cleared.
+                </p>
+                <Button
+                  onClick={() => setPhase('shop')}
+                  className="mt-10 w-full h-12 text-base font-bold"
+                >
+                  Back to shop
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+        </main>
+      )}
 
-      <footer className="border-t border-stone-300 bg-stone-200/50">
+      <footer className="border-t border-stone-200 bg-stone-50">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <p className="font-serif text-lg font-bold text-stone-900">
-                Northline Electronics
+              <p className="font-sans text-lg font-black uppercase tracking-widest text-foreground">
+                Streetwear Collective
               </p>
               <p className="mt-2 text-sm text-stone-600">
-                Demo store: React, React Hook Form, Zod, Fastify, MongoDB.
+                Premium streetwear essentials. Crafted with quality and style in mind.
               </p>
             </div>
             <div>
-              <p className="text-xs font-bold uppercase tracking-wide text-stone-500">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-stone-400">
                 Shop
               </p>
-              <ul className="mt-3 space-y-2 text-sm text-stone-700">
+              <ul className="mt-4 space-y-2 text-sm font-medium text-stone-700">
                 <li>
-                  <a href="#categories" className="hover:underline">
-                    All categories
+                  <a href="#" className="hover:text-stone-900 underline-offset-4 hover:underline">
+                    New Arrivals
                   </a>
                 </li>
                 <li>
-                  <a href="#trust" className="hover:underline">
-                    Why us
+                  <a href="#" className="hover:text-stone-900 underline-offset-4 hover:underline">
+                    Essentials
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <p className="text-xs font-bold uppercase tracking-wide text-stone-500">
-                Categories
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-stone-400">
+                Info
               </p>
-              <ul className="mt-3 space-y-2 text-sm text-stone-700">
-                <li>TV &amp; home theater</li>
-                <li>Wireless &amp; wired audio</li>
-                <li>Speakers &amp; displays</li>
+              <ul className="mt-4 space-y-2 text-sm font-medium text-stone-700">
+                <li>Sustainability</li>
+                <li>Size Guide</li>
+                <li>Shipping & Returns</li>
               </ul>
             </div>
             <div>
-              <p className="text-xs font-bold uppercase tracking-wide text-stone-500">
-                Year
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-stone-400">
+                Connect
               </p>
-              <p className="mt-3 text-sm text-stone-600">
-                © {new Date().getFullYear()} Northline demo
+              <p className="mt-4 text-sm font-medium text-stone-600">
+                © {new Date().getFullYear()} Streetwear Collective
               </p>
             </div>
           </div>
         </div>
       </footer>
+
+      {/* Floating Chat Button */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <button className="flex h-12 w-12 items-center justify-center rounded-full bg-stone-900 text-white shadow-2xl transition-transform hover:scale-110 active:scale-95">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }

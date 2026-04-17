@@ -5,6 +5,9 @@ import {
   verificationCodeSchema,
   type VerificationFormValues,
 } from '../../lib/schemas/checkout';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 type Props = {
   sessionId: string;
@@ -45,29 +48,30 @@ export function VerifyStepForm({
       className="space-y-5"
       noValidate
     >
-      <div>
-        <label
+      <div className="space-y-4">
+        <Label
           htmlFor="otp"
-          className="block text-xs font-medium text-stone-500 uppercase"
+          className="uppercase text-[10px] font-black tracking-[0.3em] text-muted-foreground"
         >
-          6-digit code
-        </label>
-        <input
+          6-digit verification code
+        </Label>
+        <Input
           id="otp"
           {...register('code')}
           inputMode="numeric"
           autoComplete="one-time-code"
           maxLength={6}
           placeholder="••••••"
-          className="mt-2 w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-center font-mono text-2xl tracking-[0.35em] text-stone-900 outline-none ring-orange-500/0 transition focus:border-orange-400 focus:ring-4"
+          className="h-20 text-center font-mono text-4xl tracking-[0.5em] placeholder:tracking-normal placeholder:font-sans bg-muted/20 border-border/50 focus:border-primary/50 transition-all rounded-xl shadow-inner"
         />
         {errors.code && (
           <p className="mt-2 text-sm text-red-600">{errors.code.message}</p>
         )}
       </div>
 
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <button
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between py-4">
+        <Button
+          variant="link"
           type="button"
           onClick={async () => {
             try {
@@ -79,22 +83,22 @@ export function VerifyStepForm({
               setError('code', { message });
             }
           }}
-          className="text-sm font-medium text-stone-600 underline-offset-2 hover:text-orange-600 hover:underline"
+          className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-foreground h-auto p-0"
         >
           Resend code
-        </button>
-        <p className="text-xs text-stone-400">
-          Sent to <span className="text-stone-600">{emailHint}</span>
+        </Button>
+        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40">
+          Sent to <span className="text-muted-foreground/60">{emailHint}</span>
         </p>
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-full bg-stone-900 py-3 text-sm font-semibold text-white transition hover:bg-stone-800 disabled:opacity-60"
+        className="w-full h-14 text-xs font-black uppercase tracking-[0.3em] bg-foreground text-background hover:bg-foreground/90 rounded-xl transition-all active:scale-95 shadow-2xl"
       >
-        Verify & place order
-      </button>
+        {isSubmitting ? 'Verifying...' : 'Finalize order'}
+      </Button>
     </form>
   );
 }
