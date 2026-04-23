@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getDb } from './_lib/db';
+import products from '../data/products.json';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
@@ -8,30 +8,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const database = await getDb();
-    const rows = await database
-      .collection('products')
-      .find({})
-      .sort({ _id: 1 })
-      .project({
-        _id: 1,
-        name: 1,
-        tagline: 1,
-        priceCents: 1,
-        image: 1,
-        category: 1,
-      })
-      .toArray();
-
     res.status(200).json({
-      products: rows.map((r) => ({
-        id: r._id,
-        name: r.name as string,
-        tagline: r.tagline as string,
-        priceCents: r.priceCents as number,
-        image: r.image as string,
-        category: (r.category as string) ?? 'General',
-      })),
+      products: products,
     });
   } catch (error) {
     console.error('Error fetching products:', error);

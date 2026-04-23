@@ -1,0 +1,210 @@
+[
+  {
+    "id": "tee-oversized-black",
+    "name": "Oversized Graphics Tee",
+    "tagline": "100% heavy cotton, relaxed boxy fit",
+    "priceCents": 4500,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "hoodie-cyber-tech",
+    "name": "Cyber Tech Hoodie",
+    "tagline": "Reflective structural seams, water-repellent shroud",
+    "priceCents": 12000,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "jacket-stealth-bomber",
+    "name": "Stealth Bomber v2",
+    "tagline": "Matte nylon shell, internal heating grid",
+    "priceCents": 24500,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "tee-vintage-white",
+    "name": "Vintage Wash Mock Tee",
+    "tagline": "Sun-faded effect, premium weight",
+    "priceCents": 5500,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "pants-cargo-shorts",
+    "name": "Tactical Cargo Shorts",
+    "tagline": "Quick-dry fabric, reinforced seams",
+    "priceCents": 5800,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "shirt-flannel-oversized",
+    "name": "Oversized Flannel Shirt",
+    "tagline": "Heavyweight brushed cotton, plaid pattern",
+    "priceCents": 6500,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1578939662863-5cd416d45a69?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "vest-tech-gilet",
+    "name": "Tech Gilet Vest",
+    "tagline": "Reflective details, modular utility",
+    "priceCents": 11000,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "tee-longsleeve-distressed",
+    "name": "Distressed Longsleeve",
+    "tagline": "Raw hem, relaxed sleeves",
+    "priceCents": 4800,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "jacket-neon-windbreaker",
+    "name": "Neon Windbreaker",
+    "tagline": "High-visibility, reflective accents",
+    "priceCents": 8900,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "sneaker-neon-retro",
+    "name": "Vibrant Retro Runner",
+    "tagline": "Neon accents, ergonomic cushioning",
+    "priceCents": 12500,
+    "category": "Footwear",
+    "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "sneaker-obsidian-gold",
+    "name": "Obsidian & Gold Low",
+    "tagline": "Premium leather, gold leaf detailing",
+    "priceCents": 14000,
+    "category": "Footwear",
+    "image": "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "sneaker-cyan-pulse",
+    "name": "Cyan Pulse Boost",
+    "tagline": "Breathable knit, energy return sole",
+    "priceCents": 11000,
+    "category": "Footwear",
+    "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "boot-platform-combat",
+    "name": "Platform Combat Boot",
+    "tagline": "Chunky sole, vegan leather build",
+    "priceCents": 14500,
+    "category": "Footwear",
+    "image": "https://images.unsplash.com/photo-1629235483838-8a8b6647983c?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "sneaker-pastel-dreams",
+    "name": "Pastel Dream High-Top",
+    "tagline": "Soft canvas, hand-painted aesthetic",
+    "priceCents": 9500,
+    "category": "Footwear",
+    "image": "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "sneaker-minimal-leather",
+    "name": "Minimalist Studio Low",
+    "tagline": "Italian leather, clean aesthetic",
+    "priceCents": 12000,
+    "category": "Footwear",
+    "image": "https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "sneaker-trail-blazer",
+    "name": "Trail Blazer Runner",
+    "tagline": "Grip sole, waterproof mesh",
+    "priceCents": 13500,
+    "category": "Footwear",
+    "image": "https://images.unsplash.com/photo-1584735175315-9d5df23860e6?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "sneaker-chunky-dad",
+    "name": "Heritage Dad Sneaker",
+    "tagline": "Multi-layer mesh, legacy comfort",
+    "priceCents": 11500,
+    "category": "Footwear",
+    "image": "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "watch-sc-chronograph",
+    "name": "SC Chronograph",
+    "tagline": "Sapphire glass, stainless steel band",
+    "priceCents": 24000,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "mask-tech-filtered",
+    "name": "Filtered Tech Mask",
+    "tagline": "HEPA filtration, neoprone structural fit",
+    "priceCents": 4200,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "shades-neon-visor",
+    "name": "Neon Horizon Visors",
+    "tagline": "UV400, wraparound frame",
+    "priceCents": 4500,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "wallet-leather-slim",
+    "name": "Minimalist Card Holder",
+    "tagline": "Full-grain leather, RFID blocking",
+    "priceCents": 4500,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1627123424574-724758594e93?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "cap-street-acid",
+    "name": "Acid Wash Dad Cap",
+    "tagline": "Embroidered logo, vintage feel",
+    "priceCents": 3200,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "scarf-knit-oversized",
+    "name": "Heavy Knit Scarf",
+    "tagline": "2-meter length, extra soft acrylic",
+    "priceCents": 3800,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "shades-tech-viper",
+    "name": "Tech Viper Shades",
+    "tagline": "Polarized, futuristic silhouette",
+    "priceCents": 7500,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "beanie-ribbed-neon",
+    "name": "Neon Ribbed Beanie",
+    "tagline": "Slouchy fit, high-vis orange",
+    "priceCents": 2800,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=1974&auto=format&fit=crop"
+  },
+  {
+    "id": "belt-industrial-web",
+    "name": "Industrial Web Belt",
+    "tagline": "D-ring buckle, high-tenacity nylon",
+    "priceCents": 2800,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=1974&auto=format&fit=crop"
+  }
+]

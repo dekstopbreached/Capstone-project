@@ -26,30 +26,9 @@ async function main() {
   });
 
   app.get('/api/products', async () => {
-    const database = getDb();
-    const rows = await database
-      .collection('products')
-      .find({})
-      .sort({ _id: 1 })
-      .project({
-        _id: 1,
-        name: 1,
-        tagline: 1,
-        priceCents: 1,
-        image: 1,
-        category: 1,
-      })
-      .toArray();
-
+    const products = (await import('../data/products.json', { assert: { type: 'json' } })).default;
     return {
-      products: rows.map((r) => ({
-        id: r._id,
-        name: r.name as string,
-        tagline: r.tagline as string,
-        priceCents: r.priceCents as number,
-        image: r.image as string,
-        category: (r.category as string) ?? 'General',
-      })),
+      products: products,
     };
   });
 

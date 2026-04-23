@@ -119,7 +119,7 @@ function Shell() {
                   <ChevronDown className="h-3 w-3 text-muted-foreground group-hover:text-foreground transition-colors" />
                 </div>
                 <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
-                  <span className="text-foreground">1976</span> Products
+                  <span className="text-foreground">{products.length}</span> Products
                 </div>
               </div>
             </div>
@@ -133,7 +133,24 @@ function Shell() {
               </div>
             )}
             
-            {!productsLoading && !productsError && (
+            {!productsLoading && productsError && (
+              <div className="flex h-64 flex-col items-center justify-center gap-4 text-destructive">
+                <p className="text-sm font-bold uppercase tracking-widest">Error loading catalog</p>
+                <p className="text-xs text-muted-foreground">{productsError}</p>
+                <Button variant="outline" size="sm" onClick={() => window.location.reload()}>
+                  Try Again
+                </Button>
+              </div>
+            )}
+            
+            {!productsLoading && !productsError && products.length === 0 && (
+              <div className="flex h-64 flex-col items-center justify-center gap-4 text-muted-foreground">
+                <p className="text-sm font-bold uppercase tracking-widest">Catalog is empty</p>
+                <p className="text-xs">No products found in the database.</p>
+              </div>
+            )}
+            
+            {!productsLoading && !productsError && products.length > 0 && (
               <div className="space-y-32">
                 <ShopCatalog products={products} />
                 
