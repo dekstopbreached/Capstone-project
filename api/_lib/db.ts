@@ -1,7 +1,7 @@
 import { MongoClient, type Db } from 'mongodb';
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const MONGODB_DB = process.env.MONGODB_DB || 'streetwear';
+const MONGODB_DB: string = process.env.MONGODB_DB || 'streetwear';
 
 if (!MONGODB_URI) {
   throw new Error('MONGODB_URI environment variable is not set');
