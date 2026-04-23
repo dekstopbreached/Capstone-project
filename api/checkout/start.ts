@@ -6,6 +6,7 @@ import {
   createPendingOrder,
   priceCheckoutItems,
 } from '../../server/checkout';
+import { seedProducts } from '../../shared/db-utils';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -15,6 +16,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const database = await getDb();
+    // Auto-seed to ensure products have stock fields etc
+    await seedProducts(database);
+
     const parsed = checkoutStartBodySchema.safeParse(req.body);
     
     if (!parsed.success) {
