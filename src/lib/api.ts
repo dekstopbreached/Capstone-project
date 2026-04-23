@@ -4,13 +4,14 @@ import type { CheckoutStartBody, ShippingFormValues } from './schemas/checkout';
 type ApiErrorBody = { error?: string; details?: unknown };
 
 async function readError(res: Response): Promise<string> {
+  const text = await res.text();
   try {
-    const body = (await res.json()) as ApiErrorBody;
+    const body = JSON.parse(text) as ApiErrorBody;
     if (typeof body.error === 'string') return body.error;
   } catch {
     /* ignore */
   }
-  return res.statusText || 'Request failed';
+  return text || res.statusText || 'Request failed';
 }
 
 export async function fetchProducts(): Promise<Product[]> {

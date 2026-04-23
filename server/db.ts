@@ -11,11 +11,18 @@ export async function connectMongo(): Promise<Db> {
   const uri = process.env.MONGODB_URI ?? DEFAULT_URI;
   const name = process.env.MONGODB_DB ?? DEFAULT_DB;
 
-  client = new MongoClient(uri);
-  await client.connect();
-  db = client.db(name);
-  await seedProducts(db);
-  return db;
+  try {
+    console.log(`Connecting to MongoDB: ${uri.replace(/:([^:@]+)@/, ':****@')} / db=${name}`);
+    client = new MongoClient(uri);
+    await client.connect();
+    db = client.db(name);
+    console.log('MongoDB connected successfully');
+    await seedProducts(db);
+    return db;
+  } catch (err) {
+    console.error('MongoDB connection failed:', err.message);
+    throw err;
+  }
 }
 
 export function getDb(): Db {
