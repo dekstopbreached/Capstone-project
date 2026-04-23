@@ -25,19 +25,23 @@ Vercel automatically detects the project type, but the following structure is cr
 
 ---
 
-## 🗄️ Database: MongoDB Configuration
+## 🗄️ Database & Data Configuration
 
-The application uses **MongoDB**. In a serverless environment, database connections must be handled carefully to avoid exhausting connection limits.
+The application now uses a hybrid approach for data to ensure maximum reliability and ease of deployment.
 
-### 1. Connection Caching
-The implementation in `api/_lib/db.ts` uses a **singleton pattern** to cache the database connection across multiple function invocations.
+### 1. Product Catalog (JSON)
+The product catalog is now stored in `data/products.json`. 
+- **Benefits**: Products load instantly, no database connection required for the main shop page, and no seeding needed.
+- **Vercel**: The JSON is bundled with your serverless functions automatically.
 
-### 2. Environment Variables
-You must configure these variables in the **Vercel Dashboard** under **Project Settings > Environment Variables**:
+### 2. Checkout & OTP (MongoDB)
+MongoDB is still used for the **Checkout System** to store session data and 6-digit verification codes.
+- **Connection Caching**: The implementation in `api/_lib/db.ts` uses a singleton pattern to cache the connection.
+- **Environment Variables**: You still need these for the checkout to work!
 
 | Variable | Description | Example |
 | :--- | :--- | :--- |
-| `MONGODB_URI` | Your MongoDB connection string. | `mongodb+srv://user:pass@cluster.mongodb.net/...` |
+| `MONGODB_URI` | Your MongoDB connection string. | `mongodb+srv://...` |
 | `MONGODB_DB` | The name of the database. | `streetwear` |
 
 ---
