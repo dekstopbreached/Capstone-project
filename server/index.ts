@@ -1,6 +1,9 @@
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import { randomUUID } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   checkoutResendBodySchema,
   checkoutStartBodySchema,
@@ -25,11 +28,17 @@ async function main() {
     origin: true,
   });
 
-  app.get('/api/products', async () => {
-    const products = (await import('../data/products.json', { assert: { type: 'json' } })).default;
-    return {
-      products: products,
-    };
+  const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+  app.get('/api/products', async (req, reply) => {
+    try {
+      const dataPath = join(__dirname, '../data/products.json');
+      const products = JSON.parse(readFileSync(dataPath, 'utf8'));
+      return { products };
+    } catch (err) {
+      req.log.error(err);
+      return reply.code(500).send({ error: 'Failed to load products' });
+    }
   });
 
   app.post('/api/checkout/start', async (req, reply) => {
