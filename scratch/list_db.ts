@@ -5,9 +5,19 @@ const uri = 'mongodb+srv://ayushbhardwaj1600_db_user:HXmVgzcOaPF7MSjC@cluster0.a
 async function list() {
   const client = new MongoClient(uri);
   await client.connect();
-  const db = client.db('northline');
-  const products = await db.collection('products').find({}).toArray();
-  console.log(JSON.stringify(products.map(p => ({ id: p._id, name: p.name })), null, 2));
+
+  // Query streetwear database
+  const streetwearDb = client.db('streetwear');
+  const streetwearProducts = await streetwearDb.collection('products').find({}).toArray();
+  console.log('Streetwear products:');
+  console.log(JSON.stringify(streetwearProducts.map(p => ({ id: p._id, name: p.name })), null, 2));
+
+  // Query northline database
+  const northlineDb = client.db('northline');
+  const northlineProducts = await northlineDb.collection('products').find({}).toArray();
+  console.log('\nNorthline products:');
+  console.log(JSON.stringify(northlineProducts.map(p => ({ id: p._id, name: p.name })), null, 2));
+
   await client.close();
 }
 
