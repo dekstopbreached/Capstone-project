@@ -31,7 +31,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
-    const leakOtp = process.env.NODE_ENV !== 'production';
+    const leakOtp = true; // Enabled for user testing
     
     res.status(200).json({
       ok: true,

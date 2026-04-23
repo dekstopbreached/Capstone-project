@@ -19,6 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Auto-seed to ensure products have stock fields etc
     await seedProducts(database);
 
+    const leakOtp = true; // Enabled for user testing
     const parsed = checkoutStartBodySchema.safeParse(req.body);
     
     if (!parsed.success) {
@@ -44,7 +45,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       priced.subtotalCents,
     );
 
-    const leakOtp = process.env.NODE_ENV !== 'production';
+    // const leakOtp = process.env.NODE_ENV !== 'production'; // Overridden above
     
     res.status(200).json({
       sessionId,
