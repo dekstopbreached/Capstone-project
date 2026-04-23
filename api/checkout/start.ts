@@ -1,12 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { randomUUID } from 'node:crypto';
-import { getDb } from '../_lib/db';
-import { checkoutStartBodySchema } from '../../shared/schemas';
+import { getDb } from '../_lib/db.js';
+import { checkoutStartBodySchema } from '../../shared/schemas.js';
 import {
   createPendingOrder,
   priceCheckoutItems,
-} from '../../server/checkout';
-import { seedProducts } from '../../shared/db-utils';
+} from '../../server/checkout.js';
+import { seedProducts } from '../../shared/db-utils.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {

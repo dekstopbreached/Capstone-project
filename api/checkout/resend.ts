@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getDb } from '../_lib/db';
-import { checkoutResendBodySchema } from '../../shared/schemas';
-import { replaceVerificationCode } from '../../server/checkout';
+import { getDb } from '../_lib/db.js';
+import { checkoutResendBodySchema } from '../../shared/schemas.js';
+import { replaceVerificationCode } from '../../server/checkout.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
