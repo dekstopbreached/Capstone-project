@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { CartProvider, useCart } from './context/CartContext';
 import { formatPrice, type Product } from './data/products';
 import { fetchProducts } from './lib/api';
+import localProducts from '../data/products.json';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { PromoStrip } from './components/PromoStrip';
@@ -18,8 +19,8 @@ type Phase = 'shop' | 'checkout' | 'success';
 function Shell() {
   const [phase, setPhase] = useState<Phase>('shop');
   const { subtotalCents, clear } = useCart();
-  const [products, setProducts] = useState<Product[]>([]);
-  const [productsLoading, setProductsLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>(localProducts as Product[]);
+  const [productsLoading, setProductsLoading] = useState(false);
   const [productsError, setProductsError] = useState<string | null>(null);
   const [serverSubtotalCents, setServerSubtotalCents] = useState<number | null>(
     null,
@@ -32,25 +33,17 @@ function Shell() {
   }, [phase]);
 
   useEffect(() => {
-    let cancelled = false;
-    setProductsLoading(true);
-    setProductsError(null);
+    // We already have localProducts, but we try to fetch latest from server anyway
+    // If it fails, we just stick with the local ones (no error shown to user)
     fetchProducts()
       .then((p) => {
-        if (!cancelled) {
+        if (p && p.length > 0) {
           setProducts(p);
-          setProductsLoading(false);
         }
       })
       .catch((e) => {
-        if (!cancelled) {
-          setProductsError(e instanceof Error ? e.message : 'Failed to load');
-          setProductsLoading(false);
-        }
+        console.warn('Could not sync with server catalog, using local version:', e);
       });
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   const goCheckout = useCallback(() => {
