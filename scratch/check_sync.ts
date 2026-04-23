@@ -22,4 +22,4 @@ async function check() {
   await client.close();
 }
 
-check();
+check().catch(console.error);

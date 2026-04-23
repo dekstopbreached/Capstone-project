@@ -13,9 +13,9 @@ async function remove() {
     'backpack-urban-elite',
     'bag-mini-crossbody'
   ];
-  const res = await products.deleteMany({ _id: { $in: idsToRemove } });
+  const res = await products.deleteMany({ _id: { $in: idsToRemove } } as any);
   console.log(`Deleted ${res.deletedCount} items from northline DB.`);
   await client.close();
 }
 
-remove();
+remove().catch(console.error);

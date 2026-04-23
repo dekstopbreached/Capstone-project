@@ -21,4 +21,4 @@ async function list() {
   await client.close();
 }
 
-list();
+list().catch(console.error);
